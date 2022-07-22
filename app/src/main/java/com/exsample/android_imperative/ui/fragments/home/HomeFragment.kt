@@ -103,11 +103,14 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
     }
 
     fun callDetailsActivity(tvShow: TVShow, sharedImageView: ImageView) {
+        val extras = FragmentNavigatorExtras(
+            sharedImageView to "imageView"
+        )
         Log.d(TAG, "callDetailsActivity: ${tvShow.id}")
         findNavController().navigate(R.id.action_navigation_home_to_detailsFragment,
         bundleOf("show_id" to  tvShow.id,
             "show_img" to tvShow.image_thumbnail_path,
             "show_name" to tvShow.name,
-            "show_network" to tvShow.network))
+            "show_network" to tvShow.network), null,   FragmentNavigatorExtras(sharedImageView to getString(R.string.transition_image)))
     }
 }

@@ -2,6 +2,7 @@ package com.exsample.android_imperative.ui.fragments
 
 import android.os.Build
 import android.os.Bundle
+import android.transition.TransitionInflater
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
@@ -29,6 +30,11 @@ class DetailsFragment : BaseFragment(R.layout.fragment_details) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val transition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
+        sharedElementEnterTransition = transition
+        sharedElementReturnTransition = transition
+
         arguments?.let {
             show_id = it.get("show_id").toString()
             show_img = it.get("show_img").toString()
@@ -41,6 +47,7 @@ class DetailsFragment : BaseFragment(R.layout.fragment_details) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentDetailsBinding.bind(view)
+
         initViews()
     }
     private fun initViews() {
