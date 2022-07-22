@@ -3,6 +3,7 @@ package com.exsample.android_imperative.ui.fragments.home
 import android.content.Intent
 import android.os.Bundle
 import android.transition.TransitionInflater
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import androidx.core.app.ActivityOptionsCompat
@@ -102,31 +103,11 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
     }
 
     fun callDetailsActivity(tvShow: TVShow, sharedImageView: ImageView) {
-
-        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
-            requireActivity(), sharedImageView, ViewCompat.getTransitionName(sharedImageView)!!
-        )
-
-        val extras = FragmentNavigatorExtras( sharedImageView to "imageView")
-
+        Log.d(TAG, "callDetailsActivity: ${tvShow.id}")
         findNavController().navigate(R.id.action_navigation_home_to_detailsFragment,
-            bundleOf("show_id" to tvShow.id,
-                "show_img" to tvShow.image_thumbnail_path,
-                "show_name" to tvShow.name,
-                "show_network" to tvShow.network,
-                "iv_movie" to ViewCompat.getTransitionName(sharedImageView)
-            ),
-            null,
-            extras)
-
-//        val intent = Intent(requireActivity(), DetailActivty::class.java)
-//        intent.putExtra("show_id", tvShow.id)
-//        intent.putExtra("show_img", tvShow.image_thumbnail_path)
-//        intent.putExtra("show_name", tvShow.name)
-//        intent.putExtra("show_network", tvShow.network)
-//        intent.putExtra("iv_movie", ViewCompat.getTransitionName(sharedImageView))
-//
-//
-//        startActivity(intent, options.toBundle())
+        bundleOf("show_id" to  tvShow.id,
+            "show_img" to tvShow.image_thumbnail_path,
+            "show_name" to tvShow.name,
+            "show_network" to tvShow.network))
     }
 }
