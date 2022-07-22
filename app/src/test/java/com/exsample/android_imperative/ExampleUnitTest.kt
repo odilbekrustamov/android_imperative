@@ -48,4 +48,32 @@ class ExampleUnitTest {
         val tvShow = tvShoes[0]
         assertEquals(tvShow.status, "Running")
     }
+
+    @Test
+    fun checkStatusCodeDetail() = runTest {
+        val response = AppModule().tvShowService().apiTvShowDetails(35624)
+        assertEquals(response.code(), 200)
+    }
+
+    @Test
+    fun responseIsSuccessfulDetail() = runTest {
+        val response = AppModule().tvShowService().apiTvShowDetails(35624)
+        assertTrue(response.isSuccessful)
+    }
+
+    @Test
+    fun checkTVShowListNotNullDetail() = runTest {
+        val response = AppModule().tvShowService().apiTvShowDetails(35624)
+        assertNotNull(response.body())
+        assertNotNull(response.body()!!.tvShow)
+    }
+
+    @Test
+    fun checkTVShowListNameDetail() = runTest {
+        val response = AppModule().tvShowService().apiTvShowDetails(35624)
+        val tv_show = response.body()
+        val tvShow = tv_show!!.tvShow
+        val name = tvShow.name
+        assertEquals(name, "The Flash")
+    }
 }

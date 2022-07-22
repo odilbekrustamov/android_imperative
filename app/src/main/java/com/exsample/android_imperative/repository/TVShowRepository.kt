@@ -1,9 +1,11 @@
 package com.exsample.android_imperative.repository
 
+import com.exsample.android_imperative.db.TVShowDao
+import com.exsample.android_imperative.model.TVShow
 import com.exsample.android_imperative.networking.TVShowService
 import javax.inject.Inject
 
-class TVShowRepository @Inject constructor(private val service: TVShowService) {
+class TVShowRepository @Inject constructor(private val service: TVShowService, private val tvShowDao: TVShowDao) {
 
     /**
      * Retrofit Related
@@ -15,5 +17,9 @@ class TVShowRepository @Inject constructor(private val service: TVShowService) {
     /**
      * Room Related
      */
+
+    suspend fun getTVShowsFromDB() = tvShowDao.getTVShowsFromDB()
+    suspend fun insertTVShowToDB(tvShow: TVShow) = tvShowDao.insertTVShowToDB(tvShow)
+    suspend fun deleteTvShowsFromDB() = tvShowDao.deleteTvShowsFromDB()
 
 }

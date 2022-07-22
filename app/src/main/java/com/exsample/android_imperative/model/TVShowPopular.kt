@@ -14,10 +14,10 @@ data class TVShowPopular(
 @Entity(tableName = "tv_show")
 data class TVShow(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id") val id: Long,
-    @ColumnInfo(name = "name") val name: String,
-    @ColumnInfo(name = "start_date") val start_date: String,
-    @ColumnInfo(name = "end_date") val end_date: String,
-    @ColumnInfo(name = "network") val network: String,
-    @ColumnInfo(name = "status") val status: String,
-    @ColumnInfo(name = "image_thumbnail_path") val image_thumbnail_path: String
+    @ColumnInfo(name = "name") val name: String? = null,
+    @ColumnInfo(name = "start_date") val start_date: String? = null,
+    @ColumnInfo(name = "end_date") val end_date: String? = null,
+    @ColumnInfo(name = "network") val network: String? = null,
+    @ColumnInfo(name = "status") val status: String? = null,
+    @ColumnInfo(name = "image_thumbnail_path") val image_thumbnail_path: String? = null
 )
