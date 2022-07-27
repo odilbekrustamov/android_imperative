@@ -1,4 +1,4 @@
-package com.exsample.android_imperative.viewmodel
+package com.exsample.android_imperative.ui.fragments.details
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

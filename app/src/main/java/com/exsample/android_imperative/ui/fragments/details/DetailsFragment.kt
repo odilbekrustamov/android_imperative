@@ -1,4 +1,4 @@
-package com.exsample.android_imperative.ui.fragments
+package com.exsample.android_imperative.ui.fragments.details
 
 import android.os.Build
 import android.os.Bundle
@@ -6,17 +6,18 @@ import android.transition.TransitionInflater
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
-import androidx.core.app.ActivityCompat
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.exsample.android_imperative.R
+import com.exsample.android_imperative.adapter.EpisodeAdapter
 import com.exsample.android_imperative.adapter.TVShortAdapter
 import com.exsample.android_imperative.databinding.FragmentDetailsBinding
+import com.exsample.android_imperative.model.Details
+import com.exsample.android_imperative.model.Episode
+import com.exsample.android_imperative.ui.fragments.BaseFragment
 import com.exsample.android_imperative.utils.Logger
-import com.exsample.android_imperative.viewmodel.DetailViewModel
 
 class DetailsFragment : BaseFragment(R.layout.fragment_details) {
 
@@ -54,16 +55,18 @@ class DetailsFragment : BaseFragment(R.layout.fragment_details) {
         initObserves()
 
         binding.rvShort.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+        binding.rvEpisode.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
 
         val iv_detail: ImageView = binding.ivDetail
         binding.ivCloase.setOnClickListener {
-            ActivityCompat.finishAfterTransition(requireActivity())
+           // ActivityCompat.finishAfterTransition(requireActivity())
+            requireActivity().onBackPressed()
         }
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-          //  val imageTransitionName = extras.getString("iv_movie")
-           // iv_detail.transitionName = imageTransitionName
+//            val imageTransitionName = extras.getString("iv_movie")
+//            iv_detail.transitionName = imageTransitionName
         }
 
         binding.tvName.text = show_name
@@ -73,16 +76,20 @@ class DetailsFragment : BaseFragment(R.layout.fragment_details) {
         viewModel.apiTVShowDetails(show_id.toInt())
     }
 
-    private fun refreshAdapter(items: List<String>) {
-        val adapter = TVShortAdapter(items)
+    private fun refreshAdapter(items: Details) {
+        val adapter = TVShortAdapter(items.pictures)
         binding.rvShort.adapter = adapter
+
+        Log.d(TAG, "refreshAdapter: ${items.episodes}")
+        val adapter2 = EpisodeAdapter(items.episodes as ArrayList<Episode>)
+        binding.rvEpisode.adapter = adapter2
     }
 
-    private fun initObserves() {
-        // Retrofit Related
-        viewModel.tvShowDetails.observe(requireActivity(), {
-            Logger.d(TAG, it.toString())
-            refreshAdapter(it.tvShow.pictures)
+          private fun initObserves() {
+                // Retrofit Related
+                viewModel.tvShowDetails.observe(requireActivity(), {
+                    Logger.d(TAG, it.toString())
+                    refreshAdapter(it.tvShow)
             binding.tvDetails.text = it.tvShow.description
         })
         viewModel.errorMessage.observe(requireActivity(), {

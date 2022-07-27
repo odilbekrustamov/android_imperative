@@ -25,7 +25,6 @@ constructor(private val tvShowRepository: TVShowRepository): ViewModel() {
     val tvShowsFromDB = MutableLiveData<List<TVShow>>()
 
     val tvShowPopular = MutableLiveData<TVShowPopular>()
-    val tvShowDetails = MutableLiveData<TVShowDetails>()
 
     /**
      * Retrofit Related
@@ -60,26 +59,10 @@ constructor(private val tvShowRepository: TVShowRepository): ViewModel() {
     }
 
 
-    /**
-     * Room Related
-     */
-
-    fun getTVSowFromDB(){
-        viewModelScope.launch {
-            val tvShows = tvShowRepository.getTVShowsFromDB()
-            tvShowsFromDB.postValue(tvShows)
-        }
-    }
-
     fun insertTVShowToDB(tvShow: TVShow){
         viewModelScope.launch {
             tvShowRepository.insertTVShowToDB(tvShow)
         }
     }
 
-    fun deleteTVShowsFromDB(){
-        viewModelScope.launch {
-            tvShowRepository.deleteTvShowsFromDB()
-        }
-    }
 }

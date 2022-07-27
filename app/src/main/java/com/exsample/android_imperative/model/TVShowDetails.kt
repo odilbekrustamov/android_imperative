@@ -32,5 +32,5 @@ data class Episode (
     val season: Long,
     val episode: Long,
     val name: String,
-    val airDate: String
+    val air_date: String
 )

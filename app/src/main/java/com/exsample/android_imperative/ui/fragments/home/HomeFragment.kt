@@ -1,14 +1,11 @@
 package com.exsample.android_imperative.ui.fragments.home
 
-import android.content.Intent
 import android.os.Bundle
 import android.transition.TransitionInflater
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
-import androidx.core.app.ActivityOptionsCompat
 import androidx.core.os.bundleOf
-import androidx.core.view.ViewCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.FragmentNavigatorExtras
@@ -31,8 +28,9 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setSharedElementEnterTransition(TransitionInflater.from(getContext())
-            .inflateTransition(android.R.transition.move));
+
+        sharedElementEnterTransition = TransitionInflater.from(getContext())
+            .inflateTransition(android.R.transition.move);
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -103,9 +101,6 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
     }
 
     fun callDetailsActivity(tvShow: TVShow, sharedImageView: ImageView) {
-        val extras = FragmentNavigatorExtras(
-            sharedImageView to "imageView"
-        )
         Log.d(TAG, "callDetailsActivity: ${tvShow.id}")
         findNavController().navigate(R.id.action_navigation_home_to_detailsFragment,
         bundleOf("show_id" to  tvShow.id,
